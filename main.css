@@ -1,0 +1,44 @@
+/* .html{
+    background-color: aqua !important;
+   
+}
+
+.SearchBar{
+    
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+    margin-top: 5rem;
+}
+.SearchBar input
+{
+    width: 65%;
+    height: 3rem;
+    color: rgb(252, 252, 252);
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+    background-color: rgba(128, 128, 128, 0.315);
+    border-color: rgba(128, 128, 128, 0.164);
+    border-radius: 35px;
+}
+.SearchBar button{
+    background-color: rgb(18, 213, 4);
+    margin-left: 2%;
+    width: 10%;
+    
+    border-color: transparent;
+    justify-content: center;
+    font-weight: bolder;
+    height: 3rem;
+    border-radius: 25px;
+    
+    
+}*/
+/* SearchBar css included */
+ 
+
+#parent{
+    background-color: black !important;
+}
