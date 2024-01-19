@@ -13,12 +13,29 @@ gitHubForm.addEventListener('submit', (e) => {
     // Get the value of the GitHub username input field
     let gitHubUsername = usernameInput.value;
 
+    requestUserData(gitHubUsername)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            let userName = data.name;
+            let userBio = data.bio;
+            let userGitHubUrl = data.url;
+            let twitterHandle = data.twitter_username;
+            const imageUrl = data.avatar_url;
+            displayImage(imageUrl);
+
+        })
+
+
+
     // Run GitHub API function, passing in the GitHub username
     requestUserRepos(gitHubUsername)
         // resolve promise then parse response into json
         .then(response => response.json())
         // resolve promise then iterate through json
         .then(data => {
+
+
             // update html with data from github
             for (let i in data) {
                 // Get the ul with id of userRepos
@@ -59,6 +76,25 @@ gitHubForm.addEventListener('submit', (e) => {
             }
         })
 })
+
+
+function displayImage(imageUrl) {
+    const imageContainer = document.getElementById('imageContainer');
+    // Create an image element and set its source
+    const imageElement = document.createElement('img');
+    imageElement.src = imageUrl;
+
+    // Append the image element to the container
+    imageContainer.innerHTML = ''; // Clear previous content
+    imageContainer.appendChild(imageElement);
+
+}
+
+
+function requestUserData(username) {
+    return Promise.resolve(fetch(`https://api.github.com/users/${username}`))
+}
+
 
 function requestUserRepos(username) {
     // create a variable to hold the `Promise` returned from `fetch`
