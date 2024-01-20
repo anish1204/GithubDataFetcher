@@ -40,18 +40,35 @@ gitHubForm.addEventListener('submit', (e) => {
         // resolve promise then iterate through json
         .then(data => {
             console.log(data);
+            
+            var productData =[];
+            let itemsPerPage = 10;
+            let currentPage = 1;
 
 
             async function dataTable() {
                 // await productData();
                 // console.log(productData);
 
-                document.getElementById("product_container").innerHTML = data.map(data =>
+                const pages = [];
+                for(let i=0;i<=Math.ceil(data.length / itemsPerPage);i++)
+                {
+                    pages.push(i);
+                }
+
+                const indexOfLastPages = currentPage * itemsPerPage;
+                const indexOfFirstPage = indexOfLastPages - itemsPerPage;
+                const currentItems = data.slice(indexOfFirstPage,indexOfLastPages);
+                //render pages according to pagination
+
+
+
+                document.getElementById("product_container").innerHTML = currentItems.map(Pdata =>
                     `   <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                            <h5 class="card-title">${data.name}</h5>
-                            <p class="card-text">${data.description}</p>
-                            <a href="${data.git_url}" class="btn btn-primary">Link</a>
+                            <h5 class="card-title">${Pdata.name}</h5>
+                            <p class="card-text">${Pdata.description}</p>
+                            <a href="${Pdata.git_url}" class="btn btn-primary">Link</a>
                             </div>
                         </div>
                     `
@@ -59,58 +76,27 @@ gitHubForm.addEventListener('submit', (e) => {
             }
             dataTable();
 
-            // async function productTable()
-            // {
-            //     productData = [];
-            //     productData = data;
-            //     console.log(productData);
 
-            // }
-            // productTable();
-
-
-
-
-
-
-            // update html with data from github
-            for (let i in data) {
-                // Get the ul with id of userRepos
-
-                if (data.message === "Not Found") {
-                    let ul = document.getElementById('userRepos');
-
-                    // Create variable that will create li's to be added to ul
-                    let li = document.createElement('li');
-
-                    // Add Bootstrap list item class to each li
-                    li.classList.add('list-group-item')
-                    // Create the html markup for each li
-                    li.innerHTML = (`
-                <p><strong>No account exists with username:</strong> ${gitHubUsername}</p>`);
-                    // Append each li to the ul
-                    ul.appendChild(li);
-                } else {
-
-                    let ul = document.getElementById('userRepos');
-
-                    // Create variable that will create li's to be added to ul
-                    let li = document.createElement('li');
-
-                    // Add Bootstrap list item class to each li
-                    li.classList.add('list-group-item')
-
-                    // Create the html markup for each li
-                    li.innerHTML = (`
-                <p><strong></strong> ${data[i].name}</p>
-                <p><strong></strong> ${data[i].description}</p>
-                <button><p><strong></strong> <a href="${data[i].html_url}">Check Here</a></p> </button> 
-            `);
-
-                    // Append each li to the ul
-                    ul.appendChild(li);
+            const prevBtn = () =>{
+                if((currentPage-1)*itemsPerPage)
+                {
+                    currentPage--;
+                    dataTable();
                 }
             }
+            const nextBtn = () =>{
+                if((currentPage* itemsPerPage)/data.length)
+                {
+                    currentPage++;
+                    dataTable();
+                }
+            }
+            document.getElementById("prevBtn").addEventListener("click",prevBtn,false);
+            document.getElementById("nextBtn").addEventListener("click",nextBtn,false);
+
+
+            
+            
         })
 })
 
