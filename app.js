@@ -6,8 +6,8 @@ gitHubForm.addEventListener('submit', (e) => {
 
     // Prevent default form submission action
     e.preventDefault();
-    document.getElementsByClassName('UserProfile')
-    
+    // document.getElementsByClassName('UserProfile')
+
     // Get the GitHub username input field on the DOM
     let usernameInput = document.getElementById('usernameInput');
 
@@ -17,17 +17,19 @@ gitHubForm.addEventListener('submit', (e) => {
     requestUserData(gitHubUsername)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             let userName = data.name;
             let userBio = data.bio;
             let userLoc = data.location;
             let userGitHubUrl = data.url;
             let twitterHandle = data.twitter_username;
             const imageUrl = data.avatar_url;
-           // console.log(imageUrl);
-            displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle);
+            // console.log(imageUrl);
+            displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitterHandle);
 
         })
+
+
 
 
 
@@ -38,6 +40,38 @@ gitHubForm.addEventListener('submit', (e) => {
         // resolve promise then iterate through json
         .then(data => {
             console.log(data);
+
+
+            async function dataTable() {
+                // await productData();
+                // console.log(productData);
+
+                document.getElementById("product_container").innerHTML = data.map(data =>
+                    `   <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                            <h5 class="card-title">${data.name}</h5>
+                            <p class="card-text">${data.description}</p>
+                            <a href="${data.git_url}" class="btn btn-primary">Link</a>
+                            </div>
+                        </div>
+                    `
+                ).join("");
+            }
+            dataTable();
+
+            // async function productTable()
+            // {
+            //     productData = [];
+            //     productData = data;
+            //     console.log(productData);
+
+            // }
+            // productTable();
+
+
+
+
+
 
             // update html with data from github
             for (let i in data) {
@@ -81,7 +115,7 @@ gitHubForm.addEventListener('submit', (e) => {
 })
 
 
-function displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle) {
+function displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitterHandle) {
     // Create an element and target it in the app.html file
     const imageContainer = document.getElementById('imageContainer');
     const UserName = document.getElementById('UserName');
@@ -93,23 +127,35 @@ function displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHan
     //const 
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
-    UserBio.innerHTML=userBio;
-    UserName.innerHTML=userName;
-    UserLocation.innerHTML=userLoc;
-    TwitterHandle.innerHTML=twitterHandle;
-    GitHubLink.innerHTML=userGitHubUrl;
+    UserBio.innerHTML = userBio;
+    UserName.innerHTML = userName;
+    UserLocation.innerHTML = userLoc;
+    TwitterHandle.innerHTML = twitterHandle;
+    GitHubLink.innerHTML = userGitHubUrl;
 
 
 
 
     // Append the image element to the container
     imageContainer.innerHTML = ''; // Clear previous content
-    
+
     imageContainer.appendChild(imageElement);
-    
+
 
 }
 
+// let usernameInput = document.getElementById('usernameInput');
+
+// let gitHubUsername = usernameInput.value;
+
+// var apiUrl = `https://api.github.com/users/${gitHubUsername}/repos`;
+
+//  function repoTable(){
+//     const dataL = fetch(apiUrl);
+//     const res = dataL.json();
+//     console.log('repoTable ' + res);
+// }
+// repoTable();
 
 function requestUserData(username) {
     return Promise.resolve(fetch(`https://api.github.com/users/${username}`))

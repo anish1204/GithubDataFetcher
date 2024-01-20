@@ -6,6 +6,7 @@
 	<title>GitHub API</title>
 	<link rel="stylesheet" href="style.css">
 	<style>
+		
 		#userRepos {
 			background-color: rgb(81, 80, 80);
 			font-weight: bold;
@@ -57,10 +58,10 @@
 
 	<div class="Repositories">
 		<nav aria-label="Page navigation example">
-			<ul id="userRepos" class="list-group mx-auto mb-5" style="width: 500px;"></ul>
+			<!-- <ul id="userRepos" class="list-group mx-auto mb-5" style="width: 500px;"></ul> -->
 			<ul class="pagination">
 
-				<!-- <ul id="userRepos" class="pagination" style="width: 500px;"></ul> -->
+				<ul id="userRepos" class="pagination" style="width: 500px;"></ul>
 				
 				<li class="page-item"><a class="page-link" href="#">Previous</a></li>
 				<li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -75,9 +76,38 @@
 	</div>
 
 
+	<div class="col-12 col-md-6 col-lg-6">
+		<div class="actions">
+			<div class="pgBtns">
+				<button id="prevBtn">
+					Prev
+				</button>
+				<button id="nextBtn">
+					Next
+				</button>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	
+	<div class="row">
+		<div class="col-12">
+			<div id="product_container">
+
+			</div>
+			<div id="msg" class="text-center"></div>
+		</div>
+	</div>
+
+
+	
 
 	<!-- pagination sectiom -->
-
+	
 	
 
 	<script src="app.js"></script>
