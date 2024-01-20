@@ -6,7 +6,8 @@ gitHubForm.addEventListener('submit', (e) => {
 
     // Prevent default form submission action
     e.preventDefault();
-
+    document.getElementsByClassName('UserProfile')
+    
     // Get the GitHub username input field on the DOM
     let usernameInput = document.getElementById('usernameInput');
 
@@ -19,10 +20,12 @@ gitHubForm.addEventListener('submit', (e) => {
             console.log(data);
             let userName = data.name;
             let userBio = data.bio;
+            let userLoc = data.location;
             let userGitHubUrl = data.url;
             let twitterHandle = data.twitter_username;
             const imageUrl = data.avatar_url;
-            displayImage(imageUrl);
+           // console.log(imageUrl);
+            displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle);
 
         })
 
@@ -34,7 +37,7 @@ gitHubForm.addEventListener('submit', (e) => {
         .then(response => response.json())
         // resolve promise then iterate through json
         .then(data => {
-
+            console.log(data);
 
             // update html with data from github
             for (let i in data) {
@@ -65,9 +68,9 @@ gitHubForm.addEventListener('submit', (e) => {
 
                     // Create the html markup for each li
                     li.innerHTML = (`
-                <p><strong>Repo:</strong> ${data[i].name}</p>
-                <p><strong>Description:</strong> ${data[i].description}</p>
-                <p><strong>URL:</strong> <a href="${data[i].html_url}">${data[i].html_url}</a></p>
+                <p><strong></strong> ${data[i].name}</p>
+                <p><strong></strong> ${data[i].description}</p>
+                <button><p><strong></strong> <a href="${data[i].html_url}">Check Here</a></p> </button> 
             `);
 
                     // Append each li to the ul
@@ -78,15 +81,32 @@ gitHubForm.addEventListener('submit', (e) => {
 })
 
 
-function displayImage(imageUrl) {
+function displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle) {
+    // Create an element and target it in the app.html file
     const imageContainer = document.getElementById('imageContainer');
-    // Create an image element and set its source
+    const UserName = document.getElementById('UserName');
+    const UserBio = document.getElementById('UserBio');
+    const UserLocation = document.getElementById('UserLocation');
+    const TwitterHandle = document.getElementById('TwitterHandle');
+    const GitHubLink = document.getElementById('GitHubLink');
+
+    //const 
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
+    UserBio.innerHTML=userBio;
+    UserName.innerHTML=userName;
+    UserLocation.innerHTML=userLoc;
+    TwitterHandle.innerHTML=twitterHandle;
+    GitHubLink.innerHTML=userGitHubUrl;
+
+
+
 
     // Append the image element to the container
     imageContainer.innerHTML = ''; // Clear previous content
+    
     imageContainer.appendChild(imageElement);
+    
 
 }
 
