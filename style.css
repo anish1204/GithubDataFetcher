@@ -1,9 +1,12 @@
+.body{
+    background-color: black !important;
+}
 .UserSection{
-    
+    height: 350px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 .UserProfile{
     width: 60%;
@@ -14,15 +17,25 @@
     font-weight: bold;
    
 }
+.NameHolder
+{
+    margin-top: 5rem;
+}
+#imageContainer{
+    border-color: black;
+    margin-left: 100px;
+    border: black 5px ;
+    width: fit-content;
+    padding-bottom: 10%;
+}
+
 #imageContainer img{
-    background-color: rgba(56, 116, 116, 0);
-    margin-right: 0px;
+    /* background-color: rgba(56, 116, 116, 0); */
+    margin-bottom: 50px;
     width: 280px;
     height: 300px;
     border-radius: 50%;
-    border-width: 5px;
-   
-    border-color: black;
+    
 }
 .Repositories{
     margin-top: 300px;
@@ -30,17 +43,19 @@
 }
 .pagination ul{
     justify-content: center;
-    /* margin-left: 45%; */
 }
 .col-12{
-    left: 45%;
     position: relative;
     justify-content: center;
     align-items: center;
 }
-
+.card{
+    border-color: black;
+    border-width: 300px;
+    margin-top: 15px;
+    left: 45%;
+}
 #product_container .productBox img{
-    width: 100%;
     height: 170px;
     object-fit: contain;
     margin-bottom: 1.5rem;

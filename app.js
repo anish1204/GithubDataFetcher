@@ -8,11 +8,18 @@ gitHubForm.addEventListener('submit', (e) => {
     e.preventDefault();
     // document.getElementsByClassName('UserProfile')
 
+
+    document.getElementById('PagntSec').style.display = 'block';
+
+
+
+
     // Get the GitHub username input field on the DOM
     let usernameInput = document.getElementById('usernameInput');
 
     // Get the value of the GitHub username input field
     let gitHubUsername = usernameInput.value;
+
 
     requestUserData(gitHubUsername)
         .then(response => response.json())
@@ -40,8 +47,8 @@ gitHubForm.addEventListener('submit', (e) => {
         // resolve promise then iterate through json
         .then(data => {
             console.log(data);
-            
-            var productData =[];
+
+            var productData = [];
             let itemsPerPage = 10;
             let currentPage = 1;
 
@@ -51,52 +58,52 @@ gitHubForm.addEventListener('submit', (e) => {
                 // console.log(productData);
 
                 const pages = [];
-                for(let i=0;i<=Math.ceil(data.length / itemsPerPage);i++)
-                {
+                for (let i = 0; i <= Math.ceil(data.length / itemsPerPage); i++) {
                     pages.push(i);
                 }
 
                 const indexOfLastPages = currentPage * itemsPerPage;
                 const indexOfFirstPage = indexOfLastPages - itemsPerPage;
-                const currentItems = data.slice(indexOfFirstPage,indexOfLastPages);
+                const currentItems = data.slice(indexOfFirstPage, indexOfLastPages);
                 //render pages according to pagination
 
 
 
-                document.getElementById("product_container").innerHTML = currentItems.map(Pdata =>
-                    `   <div class="card" style="width: 18rem;">
-                            <div class="card-body">
-                            <h5 class="card-title">${Pdata.name}</h5>
-                            <p class="card-text">${Pdata.description}</p>
-                            <a href="${Pdata.git_url}" class="btn btn-primary">Link</a>
-                            </div>
-                        </div>
+                document.getElementById("product_container").innerHTML = currentItems.map(data =>
+                    `   
+                <div class="container" style=" display: flex; flex-wrap: wrap;">
+                    <div class="card" style="width: 18rem; text-align:center;">
+                    <div class="card-body">
+                    <h5 class="card-title" >${data.name}</h5>
+                    <p class="card-text">${data.description}</p>
+                    <a  href="${data.html_url}" class="btn btn-primary" style="width:100%">Link</a>
+                    </div>
+                    </div>
+                </div>
+                    
                     `
                 ).join("");
             }
             dataTable();
 
-
-            const prevBtn = () =>{
-                if((currentPage-1)*itemsPerPage)
-                {
+            const prevBtn = () => {
+                if ((currentPage - 1) * itemsPerPage) {
                     currentPage--;
                     dataTable();
                 }
             }
-            const nextBtn = () =>{
-                if((currentPage* itemsPerPage)/data.length)
-                {
+            const nextBtn = () => {
+                if ((currentPage * itemsPerPage) / data.length) {
                     currentPage++;
                     dataTable();
                 }
             }
-            document.getElementById("prevBtn").addEventListener("click",prevBtn,false);
-            document.getElementById("nextBtn").addEventListener("click",nextBtn,false);
+            document.getElementById("prevBtn").addEventListener("click", prevBtn, false);
+            document.getElementById("nextBtn").addEventListener("click", nextBtn, false);
 
 
-            
-            
+
+
         })
 })
 
@@ -113,11 +120,11 @@ function displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitt
     //const 
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
-    UserBio.innerHTML = userBio;
-    UserName.innerHTML = userName;
-    UserLocation.innerHTML = userLoc;
+    UserBio.innerHTML = 'Bio  : ' + userBio;
+    UserName.innerHTML = 'UserName  :' + userName;
+    UserLocation.innerHTML = 'Location  : ' + userLoc;
     TwitterHandle.innerHTML = twitterHandle;
-    GitHubLink.innerHTML = userGitHubUrl;
+    GitHubLink.innerHTML = 'Github  : ' + userGitHubUrl;
 
 
 
@@ -129,19 +136,6 @@ function displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitt
 
 
 }
-
-// let usernameInput = document.getElementById('usernameInput');
-
-// let gitHubUsername = usernameInput.value;
-
-// var apiUrl = `https://api.github.com/users/${gitHubUsername}/repos`;
-
-//  function repoTable(){
-//     const dataL = fetch(apiUrl);
-//     const res = dataL.json();
-//     console.log('repoTable ' + res);
-// }
-// repoTable();
 
 function requestUserData(username) {
     return Promise.resolve(fetch(`https://api.github.com/users/${username}`))
