@@ -1,4 +1,4 @@
-1. Run the app.html through a Live Server or Normally by opening the file
+1. Run the index.html through a Live Server or Normally by opening the file
 2. You will be able to view the Webiste 
 3. Enter a github repository name in the input section and Hit Enter
 4. You Will be able to see all the details of the user
