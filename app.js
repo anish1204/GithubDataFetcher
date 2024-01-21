@@ -6,28 +6,37 @@ gitHubForm.addEventListener('submit', (e) => {
 
     // Prevent default form submission action
     e.preventDefault();
-    document.getElementsByClassName('UserProfile')
-    
+    // document.getElementsByClassName('UserProfile')
+
+
+    document.getElementById('PagntSec').style.display = 'block';
+
+
+
+
     // Get the GitHub username input field on the DOM
     let usernameInput = document.getElementById('usernameInput');
 
     // Get the value of the GitHub username input field
     let gitHubUsername = usernameInput.value;
 
+
     requestUserData(gitHubUsername)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data);
             let userName = data.name;
             let userBio = data.bio;
             let userLoc = data.location;
             let userGitHubUrl = data.url;
             let twitterHandle = data.twitter_username;
             const imageUrl = data.avatar_url;
-           // console.log(imageUrl);
-            displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle);
+            // console.log(imageUrl);
+            displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitterHandle);
 
         })
+
+
 
 
 
@@ -39,49 +48,67 @@ gitHubForm.addEventListener('submit', (e) => {
         .then(data => {
             console.log(data);
 
-            // update html with data from github
-            for (let i in data) {
-                // Get the ul with id of userRepos
+            var productData = [];
+            let itemsPerPage = 10;
+            let currentPage = 1;
 
-                if (data.message === "Not Found") {
-                    let ul = document.getElementById('userRepos');
 
-                    // Create variable that will create li's to be added to ul
-                    let li = document.createElement('li');
+            async function dataTable() {
+                // await productData();
+                // console.log(productData);
 
-                    // Add Bootstrap list item class to each li
-                    li.classList.add('list-group-item')
-                    // Create the html markup for each li
-                    li.innerHTML = (`
-                <p><strong>No account exists with username:</strong> ${gitHubUsername}</p>`);
-                    // Append each li to the ul
-                    ul.appendChild(li);
-                } else {
+                const pages = [];
+                for (let i = 0; i <= Math.ceil(data.length / itemsPerPage); i++) {
+                    pages.push(i);
+                }
 
-                    let ul = document.getElementById('userRepos');
+                const indexOfLastPages = currentPage * itemsPerPage;
+                const indexOfFirstPage = indexOfLastPages - itemsPerPage;
+                const currentItems = data.slice(indexOfFirstPage, indexOfLastPages);
+                //render pages according to pagination
 
-                    // Create variable that will create li's to be added to ul
-                    let li = document.createElement('li');
 
-                    // Add Bootstrap list item class to each li
-                    li.classList.add('list-group-item')
 
-                    // Create the html markup for each li
-                    li.innerHTML = (`
-                <p><strong></strong> ${data[i].name}</p>
-                <p><strong></strong> ${data[i].description}</p>
-                <button><p><strong></strong> <a href="${data[i].html_url}">Check Here</a></p> </button> 
-            `);
+                document.getElementById("product_container").innerHTML = currentItems.map(data =>
+                    `   
+                <div class="container" style=" display: flex; flex-wrap: wrap;">
+                    <div class="card" style="width: 18rem; text-align:center;">
+                    <div class="card-body">
+                    <h5 class="card-title" >${data.name}</h5>
+                    <p class="card-text">${data.description}</p>
+                    <a  href="${data.html_url}" class="btn btn-primary" style="width:100%">Link</a>
+                    </div>
+                    </div>
+                </div>
+                    
+                    `
+                ).join("");
+            }
+            dataTable();
 
-                    // Append each li to the ul
-                    ul.appendChild(li);
+            const prevBtn = () => {
+                if ((currentPage - 1) * itemsPerPage) {
+                    currentPage--;
+                    dataTable();
                 }
             }
+            const nextBtn = () => {
+                if ((currentPage * itemsPerPage) / data.length) {
+                    currentPage++;
+                    dataTable();
+                }
+            }
+            document.getElementById("prevBtn").addEventListener("click", prevBtn, false);
+            document.getElementById("nextBtn").addEventListener("click", nextBtn, false);
+
+
+
+
         })
 })
 
 
-function displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHandle) {
+function displayImage(imageUrl, userName, userBio, userLoc, userGitHubUrl, twitterHandle) {
     // Create an element and target it in the app.html file
     const imageContainer = document.getElementById('imageContainer');
     const UserName = document.getElementById('UserName');
@@ -93,23 +120,22 @@ function displayImage(imageUrl,userName,userBio,userLoc,userGitHubUrl,twitterHan
     //const 
     const imageElement = document.createElement('img');
     imageElement.src = imageUrl;
-    UserBio.innerHTML=userBio;
-    UserName.innerHTML=userName;
-    UserLocation.innerHTML=userLoc;
-    TwitterHandle.innerHTML=twitterHandle;
-    GitHubLink.innerHTML=userGitHubUrl;
+    UserBio.innerHTML = 'Bio  : ' + userBio;
+    UserName.innerHTML = 'UserName  :' + userName;
+    UserLocation.innerHTML = 'Location  : ' + userLoc;
+    TwitterHandle.innerHTML = twitterHandle;
+    GitHubLink.innerHTML = 'Github  : ' + userGitHubUrl;
 
 
 
 
     // Append the image element to the container
     imageContainer.innerHTML = ''; // Clear previous content
-    
+
     imageContainer.appendChild(imageElement);
-    
+
 
 }
-
 
 function requestUserData(username) {
     return Promise.resolve(fetch(`https://api.github.com/users/${username}`))
