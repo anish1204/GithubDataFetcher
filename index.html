@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>GitHub API</title>
+	<link rel="stylesheet" href="style.css">
+	<style>
+		/* .UserProfile{
+			display: none;
+		} */
+		#RepoHeading{
+			display: none;
+		}
+		#PagntSec{
+			left: 48%;
+			position: relative;
+			display: none;
+		}
+
+		#userRepos {
+			background-color: rgb(81, 80, 80);
+			font-weight: bold;
+			font-size: medium;
+			color: black;
+		}
+
+		#userRepos button {
+			/* width: 50%; */
+			background-color: rgb(68, 251, 40);
+			color: black;
+			border-radius: 35px;
+
+		}
+	</style>
+
+	<!-- Import the Bootstrap CSS CDN -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+	<h3 class="text-center mt-5">GitHub API</h3>
+	<!-- github form where user id is inserted to fetch information is given -->
+	<form id="gitHubForm" class="form-inline mx-auto" style="width: 280px">
+		<input id="usernameInput" class="form-control mb-5" type="text" name="username" placeholder="GitHub Username">
+		<input type="submit" class="btn btn-primary ml-2 mb-5" value="Submit">
+	</form>
+	<!-- Usersection for user details showing -->
+	<div class="UserSection">
+		<div id="imageContainer"> </div><br>
+		<div class="UserProfile" style="color: rgb(0, 0, 0);">
+			<div class="NameHolder"><p style="display: flex; flex-direction: row; font-size: larger;"> </p>
+			<div id="UserName"></div></div>
+			
+			<div id="UserBio"></div>
+			
+			<div id="UserLocation"></div>
+			
+			<div id="TwitterHandle"></div>
+			
+			<div id="GitHubLink"></div>
+		</div>
+	</div>
+
+	<!-- Repositories Section -->
+
+	<div class="row" style="justify-content: center;">
+		<h2 id="RepoHeading">Repositories</h2>
+		<div class="col-12">
+			<div id="product_container">
+
+			</div>
+			<div id="msg" class="text-center"></div>
+		</div>		
+	</div>
+	<div id="PagntSec" class="col-12 col-md-6 col-lg-6">
+		<div class="actions">
+			<div class="page-item">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+					  <li id="prevBtn" class="page-item"><a class="page-link" href="#">Previous</a></li>
+					
+					  <li id="nextBtn" class="page-item"><a class="page-link" href="#">Next</a></li>
+					</ul>
+				  </nav>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="app.js"></script>
+</body>
+
+</html>
